@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PETUALANGAN LITERASI: MISI BAHASA INDONESIA KELAS 6</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins & Fredoka -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        fun: ['Fredoka', 'sans-serif'],
+                    },
+                    colors: {
+                        pastelBlue: '#E0F2FE',
+                        pastelPurple: '#EDE9FE',
+                        pastelGreen: '#DCFCE7',
+                        pastelYellow: '#FEF9C3',
+                        brandBlue: '#0284C7',
+                        brandPurple: '#7C3AED',
+                        brandGreen: '#16A34A',
+                        brandYellow: '#CA8A04',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 50%, #ede9fe 100%);
+            min-height: 100vh;
+        }
+        .font-fun {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+        .btn-3d {
+            transition: all 0.1s ease;
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes bounce-short {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .animate-bounce-short {
+            animation: bounce-short 1.5s infinite;
+        }
+    </style>
+</head>
+<body class="text-slate-700 flex flex-col min-h-screen selection:bg-brandPurple selection:text-white">
+
+    <!-- AUDIO & SETTINGS BAR -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 px-4 py-3 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <span class="bg-brandPurple text-white p-2 rounded-xl text-xl shadow-md"><i class="fa-solid fa-graduation-cap"></i></span>
+            <h1 class="font-fun font-bold text-lg md:text-xl text-slate-800 tracking-wide">PETUALANGAN LITERASI <span class="text-xs bg-brandBlue text-white px-2 py-0.5 rounded-full uppercase">Kelas 6</span></h1>
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="soundToggleBtn" onclick="toggleSound()" class="bg-slate-100 hover:bg-slate-200 p-2.5 rounded-full text-slate-700 transition shadow-inner" title="Suara ON/OFF">
+                <i id="soundIcon" class="fa-solid fa-volume-high text-lg"></i>
+            </button>
+            <button onclick="openTeacherModal()" class="bg-amber-100 hover:bg-amber-200 text-amber-800 px-3 py-1.5 rounded-xl font-semibold text-xs md:text-sm flex items-center gap-1.5 transition shadow-sm">
+                <i class="fa-solid fa-chalkboard-user"></i> <span class="hidden sm:inline">Mode Guru</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 flex flex-col justify-center items-center">
+
+        <!-- 1. HALAMAN UTAMA (HOME) -->
+        <div id="screen-home" class="w-full max-w-xl bg-white rounded-3xl card-shadow p-6 md:p-10 text-center animate-float">
+            <div class="w-28 h-28 bg-gradient-to-tr from-brandPurple to-brandBlue rounded-full mx-auto flex items-center justify-center text-white text-5xl shadow-lg mb-6 animate-bounce-short">
+                <i class="fa-solid fa-book-open-reader"></i>
+            </div>
+            <h2 class="font-fun text-3xl md:text-4xl font-bold text-slate-800 mb-2">PETUALANGAN LITERASI</h2>
+            <p class="text-brandPurple font-semibold mb-6">Misi Bahasa Indonesia Kelas VI SD</p>
+            
+            <div class="bg-pastelPurple/50 p-4 rounded-2xl mb-6 text-left border border-purple-100">
+                <label class="block text-xs font-bold uppercase text-slate-500 mb-1 tracking-wider"><i class="fa-solid fa-user-pen mr-1"></i> Masukkan Nama Penjelajah Cilik:</label>
+                <input type="text" id="playerNameInput" placeholder="Contoh: Budi Santoso" class="w-full bg-white px-4 py-3 rounded-xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-brandPurple font-medium text-slate-800" maxlength="30">
+            </div>
+
+            <div class="space-y-3">
+                <button onclick="startGame()" class="w-full py-4 bg-gradient-to-r from-brandPurple to-indigo-600 text-white font-fun font-bold text-xl rounded-2xl btn-3d shadow-lg hover:opacity-95 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play"></i> MULAI PETUALANGAN
+                </button>
+                <button onclick="openTutorial()" class="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-2xl transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-question text-brandBlue"></i> CARA BERMAIN
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. PETA DUNIA (WORLD MAP) -->
+        <div id="screen-map" class="w-full max-w-2xl bg-white rounded-3xl card-shadow p-6 md:p-8 hidden">
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <div>
+                    <h3 class="font-fun text-2xl font-bold text-slate-800">Peta Dunia Literasi</h3>
+                    <p class="text-sm text-slate-500">Halo, <span id="displayPlayerName" class="font-semibold text-brandPurple"></span>! Pilih dunia misimu.</p>
+                </div>
+                <button onclick="goToHome()" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-xl font-semibold text-slate-600">
+                    <i class="fa-solid fa-house"></i> Menu Utama
+                </button>
+            </div>
+
+            <div id="worldsContainer" class="space-y-4">
+                <!-- Diisi via JavaScript -->
+            </div>
+        </div>
+
+        <!-- 3. HALAMAN PERMAINAN (GAMEPLAY) -->
+        <div id="screen-game" class="w-full max-w-2xl bg-white rounded-3xl card-shadow p-6 md:p-8 hidden">
+            <div class="flex justify-between items-center mb-4 text-sm">
+                <span id="levelBadge" class="bg-brandPurple/10 text-brandPurple font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider">Level 1</span>
+                <div class="flex items-center gap-3">
+                    <span id="timerDisplay" class="bg-amber-100 text-amber-800 font-bold px-3 py-1 rounded-full text-xs hidden"><i class="fa-solid fa-clock mr-1"></i> <span id="timeCount">30</span>s</span>
+                    <span class="font-bold text-slate-600">Soal <span id="currentQuestionNum">1</span>/10</span>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-100 h-3 rounded-full mb-6 overflow-hidden">
+                <div id="progressBar" class="bg-brandPurple h-full w-10% transition-all duration-300 rounded-full"></div>
+            </div>
+
+            <!-- Stimulus / Bacaan -->
+            <div id="stimulusContainer" class="bg-pastelBlue/40 border border-blue-100 p-4 md:p-5 rounded-2xl mb-5 text-sm md:text-base leading-relaxed text-slate-700 max-h-48 overflow-y-auto shadow-inner">
+                <!-- Teks stimulus soal -->
+            </div>
+
+            <!-- Pertanyaan -->
+            <h4 id="questionText" class="font-fun text-lg md:text-xl font-bold text-slate-800 mb-5">
+                Pertanyaan akan muncul di sini...
+            </h4>
+
+            <!-- Pilihan Jawaban -->
+            <div id="optionsContainer" class="space-y-3 mb-6">
+                <!-- Tombol A, B, C -->
+            </div>
+
+            <!-- Box Pembahasan (Muncul setelah jawab) -->
+            <div id="explanationBox" class="hidden bg-emerald-50 border border-emerald-200 p-4 rounded-2xl mb-4 text-sm text-emerald-900">
+                <p class="font-bold mb-1 flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-600"></i> Pembahasan:</p>
+                <p id="explanationText"></p>
+            </div>
+
+            <button id="nextQuestionBtn" onclick="nextQuestion()" class="w-full py-3.5 bg-brandGreen hover:opacity-95 text-white font-fun font-bold rounded-xl btn-3d hidden shadow-md">
+                LANJUT SOAL BERIKUTNYA <i class="fa-solid fa-arrow-right ml-1"></i>
+            </button>
+        </div>
+
+        <!-- 4. HALAMAN HASIL LEVEL (RESULT SCREEN) -->
+        <div id="screen-result" class="w-full max-w-md bg-white rounded-3xl card-shadow p-6 md:p-8 text-center hidden">
+            <div id="resultEmoji" class="text-6xl mb-3 animate-bounce">🏆</div>
+            <h3 id="resultTitle" class="font-fun text-2xl md:text-3xl font-bold text-slate-800 mb-1">SELAMAT! MISI BERHASIL!</h3>
+            <p class="text-sm text-slate-500 mb-6" id="resultSubtitle">Kerja bagus, penjelajah cilik!</p>
+
+            <div class="bg-slate-50 rounded-2xl p-4 mb-6 text-left space-y-2 border border-slate-100">
+                <div class="flex justify-between text-sm"><span class="text-slate-500">Nama Pemain:</span> <strong id="resName" class="text-slate-800"></strong></div>
+                <div class="flex justify-between text-sm"><span class="text-slate-500">Level:</span> <strong id="resLevel" class="text-brandPurple"></strong></div>
+                <div class="flex justify-between text-sm"><span class="text-slate-500">Jawaban Benar:</span> <strong id="resCorrect" class="text-emerald-600"></strong> / 10</div>
+                <div class="flex justify-between text-sm"><span class="text-slate-500">Nilai Akhir:</span> <strong id="resScore" class="text-blue-600 text-lg"></strong></div>
+                <div class="flex justify-center gap-1.5 pt-2 text-2xl text-amber-400" id="resStars">
+                    ⭐ ⭐ ⭐
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <button id="btnNextLevel" onclick="proceedNextLevel()" class="w-full py-3.5 bg-brandGreen text-white font-fun font-bold rounded-xl btn-3d shadow-md hidden">
+                    LANJUT KE LEVEL BERIKUTNYA <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+                <button id="btnRetryLevel" onclick="retryLevel()" class="w-full py-3.5 bg-amber-500 text-white font-fun font-bold rounded-xl btn-3d shadow-md">
+                    COBA LAGI <i class="fa-solid fa-rotate-right ml-1"></i>
+                </button>
+                <button onclick="backToMap()" class="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">
+                    KEMBALI KE PETA DUNIA
+                </button>
+            </div>
+        </div>
+
+        <!-- 5. HALAMAN SERTIFIKAT KELTAMATAN -->
+        <div id="screen-certificate" class="w-full max-w-xl bg-white rounded-3xl card-shadow p-6 md:p-8 text-center hidden">
+            <div class="text-5xl text-amber-500 mb-2"><i class="fa-solid fa-award"></i></div>
+            <h3 class="font-fun text-2xl font-bold text-slate-800 mb-1">SERTIFIKAT KELULUSAN LITERASI</h3>
+            <p class="text-xs text-slate-500 mb-6">Diberikan kepada penjelajah cilik yang telah menyelesaikan seluruh 5 Dunia Misi Bahasa Indonesia.</p>
+
+            <div class="border-4 border-dashed border-amber-300 bg-amber-50/50 rounded-2xl p-6 mb-6">
+                <p class="text-xs uppercase tracking-widest text-slate-500 mb-1">Diberikan Kepada:</p>
+                <h4 id="certPlayerName" class="font-fun text-2xl font-bold text-brandPurple mb-3">Nama Siswa</h4>
+                <p class="text-xs text-slate-600 leading-relaxed">Telah berhasil menaklukkan seluruh tantangan literasi kelas 6 dari Hutan Ide Pokok hingga Kastel TKA Bahasa Indonesia dengan gemilang!</p>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="window.print()" class="flex-1 py-3 bg-brandBlue text-white font-fun font-bold rounded-xl btn-3d shadow-md">
+                    <i class="fa-solid fa-print mr-1"></i> CETAK SERTIFIKAT
+                </button>
+                <button onclick="backToMap()" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl">
+                    KEMBALI
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL: CARA BERMAIN (TUTORIAL) -->
+    <div id="modalTutorial" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 card-shadow">
+            <h3 class="font-fun text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-brandBlue"></i> Cara Bermain
+            </h3>
+            <ul class="text-sm text-slate-600 space-y-2 mb-6 list-disc pl-4">
+                <li>Pilih level dunia yang terbuka pada peta petualangan.</li>
+                <li>Baca stimulus bacaan dengan teliti sebelum menjawab soal.</li>
+                <li>Setiap level terdiri dari 10 soal pilihan ganda (A, B, dan C).</li>
+                <li>Dapatkan nilai minimal **70** untuk membuka dunia berikutnya.</li>
+                <li>Kumpulkan bintang dan jadilah master literasi kelas 6!</li>
+            </ul>
+            <button onclick="closeTutorial()" class="w-full py-3 bg-brandPurple text-white font-fun font-bold rounded-xl btn-3d">
+                MENGERTI, AYO MULAI!
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: MODE GURU (TEACHER DASHBOARD) -->
+    <div id="modalTeacher" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 card-shadow max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h3 class="font-fun text-xl font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-chalkboard-user text-amber-600"></i> Mode Guru & Dashboard
+                </h3>
+                <button onclick="closeTeacherModal()" class="text-slate-400 hover:text-slate-600 font-bold text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Tab Pilihan -->
+                <div class="flex gap-2 border-b pb-3 text-sm font-semibold">
+                    <button onclick="switchTeacherTab('scores')" id="tabBtnScores" class="px-4 py-2 bg-brandPurple text-white rounded-xl shadow-sm transition">Hasil Siswa</button>
+                    <button onclick="switchTeacherTab('bank')" id="tabBtnBank" class="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition">Bank Soal Custom</button>
+                </div>
+
+                <!-- Bagian Hasil Siswa -->
+                <div id="teacherTabScores">
+                    <h4 class="font-bold text-sm text-slate-700 mb-2">Daftar Hasil Pengerjaan Tersimpan:</h4>
+                    <div id="savedScoresList" class="space-y-2 max-h-60 overflow-y-auto text-sm bg-slate-50 p-3 rounded-xl border">
+                        <!-- Diisi JS -->
+                    </div>
+                    <button onclick="clearAllScores()" class="mt-3 text-xs bg-red-100 text-red-700 px-3 py-1.5 rounded-lg font-semibold hover:bg-red-200">Hapus Semua Riwayat</button>
+                </div>
+
+                <!-- Bagian Bank Soal Tambahan -->
+                <div id="teacherTabBank" class="hidden space-y-4">
+                    <h4 class="font-bold text-sm text-slate-700">Tambah Soal Baru:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1">Pilih Dunia / Level</label>
+                            <select id="newWorldId" class="w-full bg-slate-50 p-2.5 rounded-xl border text-sm">
+                                <option value="0">Level 1: Hutan Ide Pokok</option>
+                                <option value="1">Level 2: Pulau Kosakata</option>
+                                <option value="2">Level 3: Istana Teks</option>
+                                <option value="3">Level 4: Gunung Penalaran</option>
+                                <option value="4">Level 5: Kastel TKA Bahasa Indonesia</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1">Kunci Jawaban Benar</label>
+                            <select id="newAns" class="w-full bg-slate-50 p-2.5 rounded-xl border text-sm">
+                                <option value="0">Pilihan A</option>
+                                <option value="1">Pilihan B</option>
+                                <option value="2">Pilihan C</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1">Stimulus Bacaan</label>
+                        <textarea id="newStimulus" rows="2" class="w-full bg-slate-50 p-2.5 rounded-xl border text-sm" placeholder="Tuliskan teks bacaan singkat..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1">Pertanyaan Soal</label>
+                        <input type="text" id="newQText" class="w-full bg-slate-50 p-2.5 rounded-xl border text-sm" placeholder="Tuliskan pertanyaan...">
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="text" id="newOpt0" placeholder="Opsi A" class="bg-slate-50 p-2.5 rounded-xl border text-sm">
+                        <input type="text" id="newOpt1" placeholder="Opsi B" class="bg-slate-50 p-2.5 rounded-xl border text-sm">
+                        <input type="text" id="newOpt2" placeholder="Opsi C" class="bg-slate-50 p-2.5 rounded-xl border text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1">Pembahasan Soal</label>
+                        <input type="text" id="newExp" class="w-full bg-slate-50 p-2.5 rounded-xl border text-sm" placeholder="Tuliskan pembahasan singkat...">
+                    </div>
+                    <button onclick="saveCustomQuestion()" class="w-full py-3 bg-brandGreen text-white font-fun font-bold rounded-xl btn-3d text-sm">
+                        SIMPAN SOAL KE PERANGKAT
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT UTAMA GAME -->
+    <script>
+        // --- BANK SOAL LENGKAP 50 SOAL (5 LEVEL x 10 SOAL) ---
+        const defaultWorlds = [
+            {
+                id: 0,
+                name: "Level 1: Hutan Ide Pokok",
+                desc: "Menentukan ide pokok, kalimat utama, dan informasi penting.",
+                color: "from-emerald-500 to-green-600",
+                icon: "fa-tree",
+                questions: [
+                    {
+                        stimulus: "Menjaga kebersihan lingkungan sekolah merupakan tanggung jawab seluruh warga sekolah. Mulai dari siswa, guru, hingga staf kebersihan harus bahu-membahu merawat kebersihan kelas dan halaman. Lingkungan yang bersih akan menciptakan suasana belajar yang nyaman dan sehat.",
+                        question: "Ide pokok paragraf tersebut adalah...",
+                        options: ["Kewajiban staf kebersihan sekolah", "Tanggung jawab menjaga kebersihan sekolah", "Suasana belajar yang nyaman di kelas"],
+                        answer: 1,
+                        explanation: "Ide pokok menyatakan gagasan utama paragraf, yaitu tanggung jawab seluruh warga sekolah dalam menjaga kebersihan lingkungan."
+                    },
+                    {
+                        stimulus: "Tanaman obat keluarga (TOGA) memiliki banyak manfaat bagi kesehatan manusia. Di antaranya adalah jahe untuk meredakan masuk angin, kunyit untuk menjaga pencernaan, serta lidah buaya untuk merawat kesehatan rambut. Menanam TOGA di pekarangan rumah sangat dianjurkan.",
+                        question: "Kalimat utama pada paragraf di atas terletak di...",
+                        options: ["Awal paragraf", "Akhir paragraf", "Tengah paragraf"],
+                        answer: 0,
+                        explanation: "Kalimat utama terletak di awal paragraf ('Tanaman obat keluarga (TOGA) memiliki banyak manfaat bagi kesehatan manusia') dan didukung kalimat penjelas setelahnya."
+                    },
+                    {
+                        stimulus: "Sampah plastik memerlukan waktu ratusan tahun untuk dapat terurai secara alami. Jika dibuang sembarangan, sampah ini akan mencemari tanah dan lautan. Oleh karena itu, kita harus mengurangi penggunaan kantong plastik sekali pakai.",
+                        question: "Informasi penting yang sesuai dengan teks tersebut adalah...",
+                        options: ["Sampah plastik mudah terurai dalam waktu singkat", "Sampah plastik dapat mencemari lingkungan jika dibuang sembarangan", "Kantong plastik sekali pakai sangat ramah lingkungan"],
+                        answer: 1,
+                        explanation: "Teks menjelaskan bahwa sampah plastik memerlukan waktu lama untuk terurai dan dapat mencemari tanah serta lautan jika dibuang sembarangan."
+                    },
+                    {
+                        stimulus: "Pemerintah Kota Demak mengadakan program penanaman 1.000 pohon mangrove di sepanjang garis pantai. Program ini bertujuan untuk mencegah abrasi air laut serta menjaga ekosistem biota pesisir. Warga sekitar tampak antusias berpartisipasi.",
+                        question: "Apakah tujuan utama dari program penanaman pohon mangrove tersebut?",
+                        options: ["Mencegah abrasi air laut dan menjaga ekosistem pesisir", "Membangun kawasan wisata pantai baru", "Menyediakan kayu bakar bagi warga sekitar"],
+                        answer: 0,
+                        explanation: "Tujuan utama program tersebut secara tersurat adalah untuk mencegah abrasi air laut serta menjaga ekosistem biota pesisir."
+                    },
+                    {
+                        stimulus: "Membaca buku adalah jendela dunia. Melalui buku, kita dapat mengetahui berbagai informasi, ilmu pengetahuan, dan kebudayaan dari berbagai belahan dunia tanpa harus bepergian jauh.",
+                        question: "Gagasan utama paragraf di atas adalah...",
+                        options: ["Cara bepergian ke luar negeri", "Manfaat penting membaca buku", "Keanekaragaman kebudayaan dunia"],
+                        answer: 1,
+                        explanation: "Paragraf tersebut membahas tentang pentingnya membaca buku sebagai sarana memperoleh ilmu pengetahuan dan informasi luas."
+                    },
+                    {
+                        stimulus: "Kesehatan tubuh sangat dipengaruhi oleh pola makan yang seimbang. Makanan bergizi seperti sayur, buah, dan protein harus dikonsumsi setiap hari. Selain itu, istirahat yang cukup juga sangat menentukan kebugaran tubuh.",
+                        question: "Ide pokok paragraf di atas adalah...",
+                        options: ["Pengaruh pola makan seimbang terhadap kesehatan", "Pentingnya mengonsumsi buah setiap hari", "Cara beristirahat yang baik bagi tubuh"],
+                        answer: 0,
+                        explanation: "Ide pokok berkaitan dengan faktor penentu kesehatan tubuh yaitu pola makan seimbang dan gizi."
+                    },
+                    {
+                        stimulus: "Banjir bandang sering terjadi akibat kerusakan hutan di kawasan hulu. Penebangan pohon secara liar membuat tanah tidak mampu menyerap air hujan dengan baik. Akibatnya, air meluap ke permukiman warga.",
+                        question: "Penyebab utama terjadinya banjir bandang berdasarkan teks adalah...",
+                        options: ["Curah hujan yang sangat tinggi setiap hari", "Kerusakan hutan dan penebangan pohon liar", "Kurangnya saluran pembuangan air di kota"],
+                        answer: 1,
+                        explanation: "Banjir bandang disebabkan oleh kerusakan hutan di hulu dan penebangan liar sehingga tanah tidak dapat menyerap air."
+                    },
+                    {
+                        stimulus: "Siti adalah anak yang sangat rajin. Setiap pulang sekolah, ia selalu membantu ibunya membereskan rumah sebelum ia mulai belajar dan mengerjakan tugas dari sekolah.",
+                        question: "Informasi yang tidak sesuai dengan teks adalah...",
+                        options: ["Siti membantu ibunya setelah pulang sekolah", "Siti gemar membantu membereskan rumah", "Siti tidak pernah mengerjakan tugas sekolah"],
+                        answer: 2,
+                        explanation: "Pernyataan C tidak sesuai karena teks menyebutkan Siti juga belajar dan mengerjakan tugas sekolah."
+                    },
+                    {
+                        stimulus: "Energi matahari merupakan sumber energi terbarukan yang paling melimpah di bumi. Panel surya dapat mengubah cahaya matahari menjadi tenaga listrik yang ramah lingkungan dan hemat biaya.",
+                        question: "Kalimat utama paragraf tersebut menyatakan tentang...",
+                        options: ["Manfaat panel surya bagi rumah tangga", "Keunggulan energi matahari sebagai sumber energi terbarukan", "Cara kerja pembangkit listrik tenaga surya"],
+                        answer: 1,
+                        explanation: "Kalimat utama membahas bahwa energi matahari adalah sumber energi terbarukan yang sangat melimpah."
+                    },
+                    {
+                        stimulus: "Pramuka merupakan kegiatan ekstrakurikuler yang melatih kedisiplinan dan kemandirian siswa. Melalui kegiatan perkemahan, anggota dilatih untuk bekerja sama dalam tim dan bertahan hidup di alam terbuka.",
+                        question: "Ide pokok teks tersebut adalah...",
+                        options: ["Manfaat kegiatan Pramuka bagi siswa", "Cara mendirikan tenda perkemahan", "Jadwal kegiatan ekstrakurikuler sekolah"],
+                        answer: 0,
+                        explanation: "Teks menjelaskan manfaat kegiatan Pramuka dalam melatih kedisiplinan, kemandirian, dan kerja sama."
+                    }
+                ]
+            },
+            {
+                id: 1,
+                name: "Level 2: Pulau Kosakata",
+                desc: "Sinonim, antonim, makna kata, ungkapan, dan kosakata dalam konteks.",
+                color: "from-sky-500 to-blue-600",
+                icon: "fa-island-tropical",
+                questions: [
+                    {
+                        stimulus: "Sinonim dari kata 'canggih' adalah...",
+                        question: "Pilihlah persamaan kata (sinonim) yang tepat untuk kata 'canggih'.",
+                        options: ["Modern dan mutakhir", "Kuno dan tertinggal", "Sederhana dan biasa"],
+                        answer: 0,
+                        explanation: "Kata 'canggih' bersinonim dengan modern, mutakhir, atau menggunakan teknologi tinggi."
+                    },
+                    {
+                        stimulus: "Antonim dari kata 'rajin' adalah...",
+                        question: "Pilihlah lawan kata (antonim) yang tepat untuk kata 'rajin'.",
+                        options: ["Pandai", "Malas", "Giat"],
+                        answer: 1,
+                        explanation: "Lawan kata dari 'rajin' adalah 'malas'."
+                    },
+                    {
+                        stimulus: "Pak Rudi dikenal sebagai orang yang berdarah dingin dalam menghadapi berbagai masalah perusahaan.",
+                        question: "Arti ungkapan 'berdarah dingin' dalam kalimat tersebut adalah...",
+                        options: ["Suhu tubuhnya sangat rendah", "Tenang dan tidak mudah panik", "Bersikap kejam dan tega"],
+                        answer: 1,
+                        explanation: "Ungkapan 'berdarah dingin' dalam konteks profesional sering bermakna tenang, terkendali, dan tidak mudah panik."
+                    },
+                    {
+                        stimulus: "Arti kata 'inovasi' dalam bidang teknologi pendidikan adalah...",
+                        question: "Pilihlah arti kata 'inovasi' yang paling tepat.",
+                        options: ["Penemuan atau pembaharuan baru", "Pengulangan cara lama", "Peniruan karya orang lain"],
+                        answer: 0,
+                        explanation: "Inovasi adalah suatu penemuan baru atau pembaharuan yang menciptakan cara atau produk yang lebih baik."
+                    },
+                    {
+                        stimulus: "Anak itu selalu menjadi 'biji mata' bagi kedua orang tuanya karena perilakunya yang santun.",
+                        question: "Arti ungkapan 'biji mata' adalah...",
+                        options: ["Anggota keluarga yang diandalkan", "Kesayangan atau orang yang sangat dicintai", "Anak yang paling cerdas di rumah"],
+                        answer: 1,
+                        explanation: "Ungkapan 'biji mata' bermakna kesayangan atau orang yang sangat dikasihi."
+                    },
+                    {
+                        stimulus: "Sinonim dari kata 'teliti' adalah...",
+                        question: "Pilihlah sinonim kata 'teliti'.",
+                        options: ["Cermat dan seksama", "Ceroboh dan terburu-buru", "Ragu-ragu"],
+                        answer: 0,
+                        explanation: "Teliti berarti penuh cermat, berhati-hati, dan seksama dalam mengerjakan sesuatu."
+                    },
+                    {
+                        stimulus: "Antonim dari kata 'mahal' adalah...",
+                        question: "Pilihlah antonim kata 'mahal'.",
+                        options: ["Murah", "Bagus", "Diskon"],
+                        answer: 0,
+                        explanation: "Lawan kata dari mahal adalah murah."
+                    },
+                    {
+                        stimulus: "Perpustakaan sekolah menyetorkan banyak 'koleksi' buku baru untuk dibaca siswa.",
+                        question: "Makna kata 'koleksi' adalah...",
+                        options: ["Kumpulan benda atau barang", "Jual beli buku pelajaran", "Tempat peminjaman buku"],
+                        answer: 0,
+                        explanation: "Koleksi berarti kumpulan atau himpunan benda (buku, stempel, dll) yang dikumpulkan."
+                    },
+                    {
+                        stimulus: "Meskipun mengalami kekalahan, tim sepak bola itu tetap berjiwa besar menerima keputusan wasit.",
+                        question: "Arti ungkapan 'berjiwa besar' adalah...",
+                        options: ["Sombong dan angkuh", "Lapang dada, sabar, dan sportif", "Tubuh yang tinggi besar"],
+                        answer: 1,
+                        explanation: "Berjiwa besar bermakna sabar, lapang dada, dan sportif dalam menghadapi kegagalan."
+                    },
+                    {
+                        stimulus: "Sinonim kata 'pakar' adalah...",
+                        question: "Pilihlah sinonim kata 'pakar'.",
+                        options: ["Ahli atau spesialis", "Pemula", "Pengamat awam"],
+                        answer: 0,
+                        explanation: "Pakar adalah orang yang ahli atau mahir dalam suatu bidang ilmu."
+                    }
+                ]
+            },
+            {
+                id: 2,
+                name: "Level 3: Istana Teks",
+                desc: "Teks narasi, deskripsi, informasi, prosedur, dan unsur cerita.",
+                color: "from-purple-500 to-indigo-600",
+                icon: "fa-chess-rook",
+                questions: [
+                    {
+                        stimulus: "Langkah-langkah membuat kincir angin kertas: 1. Siapkan kertas lipat berbentuk persegi. 2. Lipat kertas secara diagonal membentuk garis silang. 3. Gunting sudut kertas menuju ke arah tengah...",
+                        question: "Jenis teks di atas termasuk golongan teks...",
+                        options: ["Teks narasi", "Teks prosedur", "Teks deskripsi"],
+                        answer: 1,
+                        explanation: "Teks tersebut berisi langkah-langkah atau tahapan melakukan sesuatu, yang merupakan ciri teks prosedur."
+                    },
+                    {
+                        stimulus: "Pantai Marina berpasir putih bersih dengan deburan ombak yang tenang. Di sepanjang pantai, berjajar pohon kelapa yang melambai-lambai tertiup angin laut sore hari.",
+                        question: "Teks di atas mendiskripsikan suatu objek secara rinci. Jenis teks tersebut adalah...",
+                        options: ["Teks deskripsi", "Teks persuasi", "Teks laporan"],
+                        answer: 0,
+                        explanation: "Teks deskripsi melukiskan atau menggambarkan suatu objek (seperti Pantai Marina) secara konkret agar pembaca seolah melihat dan merasakan sendiri."
+                    },
+                    {
+                        stimulus: "Di sebuah desa kecil di lereng gunung, tinggal seorang anak gembala bernama Riko. Ia selalu sabar menjaga domba-dombanya meskipun cuaca sering berubah terik dan hujan.",
+                        question: "Unsur latar tempat cerita di atas adalah...",
+                        options: ["Di kota besar yang ramai", "Di sebuah desa kecil di lereng gunung", "Di tepi pantai berpasir putih"],
+                        answer: 1,
+                        explanation: "Latar tempat yang disebutkan dalam cerita adalah di sebuah desa kecil di lereng gunung."
+                    },
+                    {
+                        stimulus: "Pengumuman: Diberitahukan kepada seluruh siswa kelas VI bahwa kegiatan kerja bakti kebersihan sekolah akan dilaksanakan pada hari Jumat, 15 November 2026 pukul 07.00 WIB.",
+                        question: "Informasi pokok yang disampaikan dalam pengumuman tersebut adalah...",
+                        options: ["Jadwal libur nasional akhir semester", "Kegiatan kerja bakti kebersihan kelas VI", "Lomba antar kelas di halaman sekolah"],
+                        answer: 1,
+                        explanation: "Pengumuman tersebut berisi pemberitahuan kegiatan kerja bakti kebersihan sekolah untuk siswa kelas VI."
+                    },
+                    {
+                        stimulus: "Tokoh utama yang wataknya suka menolong dan ramah kepada setiap warga desa dalam sebuah cerita dongeng disebut tokoh...",
+                        question: "Tokoh yang berwatak baik dalam cerita disebut...",
+                        options: ["Antagonis", "Protagonis", "Tritagonis"],
+                        answer: 1,
+                        explanation: "Tokoh protagonis adalah tokoh utama yang menampilkan watak dan sifat yang baik serta terpuji."
+                    },
+                    {
+                        stimulus: "Pesan moral atau amanat dalam cerita fabel biasanya disampaikan penulis melalui...",
+                        question: "Cara penulis menyampaikan pesan moral dalam cerita adalah...",
+                        options: ["Perilaku dan nasib para tokoh cerita", "Daftar pustaka di akhir buku", "Jumlah halaman buku cerita"],
+                        answer: 0,
+                        explanation: "Pesan moral (amanat) dalam cerita disampaikan melalui alur cerita, perilaku tokoh, serta akhir kisah."
+                    },
+                    {
+                        stimulus: "Teks yang berisi paparan kejadian atau peristiwa sejarah disusun secara runtut berdasarkan urutan waktu disebut teks...",
+                        question: "Teks narasi sejarah disusun berdasarkan urutan...",
+                        options: ["Waktu (kronologis)", "Abjad nama tokoh", "Tingkat kesulitan cerita"],
+                        answer: 0,
+                        explanation: "Teks sejarah atau narasi peristiwa disusun secara kronologis berdasarkan urutan waktu terjadinya."
+                    },
+                    {
+                        stimulus: "Di dalam sebuah teks laporan hasil observasi, bagian awal umumnya berisi tentang...",
+                        question: "Bagian definisi umum pada laporan observasi terletak di...",
+                        options: ["Bagian penutup laporan", "Bagian awal (pengenalan obyek)", "Bagian lampiran data"],
+                        answer: 1,
+                        explanation: "Definisi umum atau pengenalan objek laporan observasi selalu diletakkan pada bagian awal teks."
+                    },
+                    {
+                        stimulus: "Sinetron atau drama panggung biasanya menampilkan konflik antar tokoh. Tokoh yang menentang atau memusuhi tokoh utama disebut tokoh...",
+                        question: "Tokoh penentang dalam cerita dinamakan...",
+                        options: ["Protagonis", "Antagonis", "Figuran"],
+                        answer: 1,
+                        explanation: "Tokoh antagonis adalah pemeran yang menjadi penentang, musuh, atau pembawa konflik utama terhadap tokoh protagonis."
+                    },
+                    {
+                        stimulus: "Dalam struktur teks prosedur, bagian akhir yang berisi penegasan ulang atau kesimpulan disebut...",
+                        question: "Bagian penutup teks prosedur sering disebut sebagai...",
+                        options: ["Tujuan pembuatan", "Bahan dan alat", "Penegasan ulang / simpulan"],
+                        answer: 2,
+                        explanation: "Struktur teks prosedur terdiri dari tujuan, bahan/alat, langkah-langkah, dan penegasan ulang."
+                    }
+                ]
+            },
+            {
+                id: 3,
+                name: "Level 4: Gunung Penalaran",
+                desc: "Menyimpulkan bacaan, hubungan sebab akibat, dan menilai isi teks.",
+                color: "from-amber-500 to-orange-600",
+                icon: "fa-mountain",
+                questions: [
+                    {
+                        stimulus: "Musim kemarau panjang tahun ini menyebabkan debit air sumur warga menurun drastis. Petani gagal panen karena sawah mengalami kekeringan dan kekurangan pasokan air irigasi.",
+                        question: "Kesimpulan yang paling tepat dari teks tersebut adalah...",
+                        options: ["Kemarau panjang berdampak buruk pada krisis air dan gagal panen", "Petani sangat senang menyambut musim kemarau", "Sumur warga menghasilkan air yang sangat melimpah"],
+                        answer: 0,
+                        explanation: "Kesimpulan merangkum inti teks, yaitu kemarau panjang memicu kekeringan sumur dan gagal panen petani."
+                    },
+                    {
+                        stimulus: "Ani selalu rajin belajar setiap malam dan mendengarkan penjelasan guru di kelas dengan saksama. Akibatnya, ia berhasil meraih peringkat pertama di kelasnya.",
+                        question: "Hubungan sebab akibat dalam teks tersebut adalah...",
+                        options: ["Juara kelas menyebabkan Ani malas belajar", "Rajin belajar dan menyimak pelajaran menyebabkan Ani juara kelas", "Ani mendapat peringkat pertama karena jarang masuk sekolah"],
+                        answer: 1,
+                        explanation: "Sebab: rajin belajar dan menyimak guru; Akibat: meraih peringkat pertama di kelas."
+                    },
+                    {
+                        stimulus: "Pembaca menilai artikel kesehatan tersebut sangat bermanfaat karena menyajikan tips menjaga kebugaran tubuh yang mudah diterapkan sehari-hari disertai data medis yang valid.",
+                        question: "Dasar penilaian positif terhadap artikel tersebut adalah...",
+                        options: ["Memuat tips bermanfaat dan data yang valid", "Penulis menggunakan bahasa yang sangat rumit", "Artikel diterbitkan pada hari libur"],
+                        answer: 0,
+                        explanation: "Penilaian isi teks didasarkan pada kebermanfaatan tips dan kevalidan data medis yang disajikan."
+                    },
+                    {
+                        stimulus: "Lampu lalu lintas di persimpangan jalan mati total akibat korsleting listrik. Akibatnya, arus lalu lintas mengalami kemacetan panjang dan pengendara saling menyerobot.",
+                        question: "Akibat dari matinya lampu lalu lintas berdasarkan teks adalah...",
+                        options: ["Jalanan menjadi sangat sepi dan lancar", "Terjadi kemacetan panjang dan pengendara saling menyerobot", "Pengendara mematuhi rambu dengan tertib"],
+                        answer: 1,
+                        explanation: "Teks menyatakan akibat mati lampu adalah kemacetan panjang dan pengendara saling menyerobot."
+                    },
+                    {
+                        stimulus: "Meskipun harganya sedikit lebih mahal, tas buatan pengrajin lokal itu memiliki jahitan yang sangat kuat dan bahan kulit asli berkualitas tinggi yang awet bertahun-tahun.",
+                        question: "Pernyataan yang merupakan penilaian objektif terhadap tas tersebut adalah...",
+                        options: ["Tas lokal berkualitas tinggi dan awet meskipun agak mahal", "Tas tersebut sangat jelek dan mudah rusak", "Semua tas mahal pasti buatan luar negeri"],
+                        answer: 0,
+                        explanation: "Penilaian objektif sesuai teks adalah tas berkualitas tinggi dan awet meskipun harganya sedikit lebih mahal."
+                    },
+                    {
+                        stimulus: "Pohon-pohon di perkotaan berfungsi sebagai paru-paru kota karena menyerap karbon dioksida dan memproduksi oksigen segar. Oleh karena itu, penebangan pohon secara sembarangan harus dicegah.",
+                        question: "Simpulan dari paragraf tersebut adalah...",
+                        options: ["Pohon di perkotaan sangat penting untuk menghasilkan oksigen dan harus dijaga", "Pohon di pinggir jalan raya mengganggu pengendara", "Kota besar tidak memerlukan ruang terbuka hijau"],
+                        answer: 0,
+                        explanation: "Simpulan menegaskan pentingnya pohon bagi kota sebagai produsen oksigen sehingga harus dilindungi."
+                    },
+                    {
+                        stimulus: "Budi tidak sarapan pagi sebelum berangkat ke sekolah. Setibanya di lapangan upacara, ia merasa pusing dan akhirnya pingsan.",
+                        question: "Penyebab Budi pingsan di lapangan upacara adalah...",
+                        options: ["Ia tidur terlalu cepat semalam", "Ia tidak sarapan pagi sebelum berangkat sekolah", "Ia menjadi petugas upacara bendera"],
+                        answer: 1,
+                        explanation: "Penyebab utama Budi pingsan adalah karena tidak sarapan pagi."
+                    },
+                    {
+                        stimulus: "Teks A membahas tentang manfaat olahraga renang untuk kesehatan jantung. Teks B membahas tentang teknik dasar gaya dada dalam renang.",
+                        question: "Persamaan topik dari kedua teks tersebut adalah...",
+                        options: ["Sama-sama membahas tentang olahraga renang", "Sama-sama membahas resep kuliner nusantara", "Sama-sama membahas sejarah sepak bola"],
+                        answer: 0,
+                        explanation: "Kedua teks memiliki persamaan topik utama, yaitu tentang olahraga renang."
+                    },
+                    {
+                        stimulus: "Ibu membeli pupuk kompos organik untuk tanaman bunga di halaman rumah. Tanaman tersebut kini tumbuh subur, berdaun lebat, dan berbunga indah.",
+                        question: "Hubungan sebab akibat yang tepat adalah...",
+                        options: ["Pupuk kompos membuat tanaman tumbuh subur dan indah", "Tanaman subur karena dibiarkan tanpa pupuk", "Bunga layu akibat diberi pupuk organik"],
+                        answer: 0,
+                        explanation: "Sebab: pemberian pupuk kompos; Akibat: tanaman tumbuh subur dan berbunga indah."
+                    },
+                    {
+                        stimulus: "Buku cerita anak itu sangat disukai pembaca cilik karena alur ceritanya menarik, bahasanya sederhana, dan dilengkapi ilustrasi gambar berwarna yang ceria.",
+                        question: "Berdasarkan ulasan tersebut, keunggulan buku terletak pada...",
+                        options: ["Alur menarik, bahasa sederhana, dan ilustrasi ceria", "Harga buku yang sangat mahal", "Jumlah halaman yang sangat tebal"],
+                        answer: 0,
+                        explanation: "Keunggulan buku dinyatakan langsung melalui alur menarik, bahasa sederhana, dan ilustrasi ceria."
+                    }
+                ]
+            },
+            {
+                id: 4,
+                name: "Level 5: Kastel TKA Bahasa Indonesia",
+                desc: "Literasi tingkat lanjut, pemahaman bacaan kritis, interpretasi, dan evaluasi TKA.",
+                color: "from-purple-600 to-pink-600",
+                icon: "fa-chess-king",
+                questions: [
+                    {
+                        stimulus: "Grafik Pengunjung Perpustakaan Desa Sukamaju: Senin (40 orang), Selasa (65 orang), Rabu (50 orang), Kamis (80 orang), Jumat (90 orang).",
+                        question: "Berdasarkan data grafik kunjungan tersebut, pada hari apa jumlah pengunjung perpustakaan mencapai angka tertinggi?",
+                        options: ["Hari Senin", "Hari Rabu", "Hari Jumat"],
+                        answer: 2,
+                        explanation: "Kunjungan tertinggi terjadi pada hari Jumat dengan jumlah 90 orang."
+                    },
+                    {
+                        stimulus: "Iklan Layanan Masyarakat: 'Hematlah penggunaan air bersih demi kelangsungan hidup anak cucu kita di masa depan. Setiap tetes air sangat berharga bagi bumi.'",
+                        question: "Maksud atau pesan utama dari iklan layanan masyarakat tersebut adalah...",
+                        options: ["Mengajak masyarakat untuk boros menggunakan air", "Mengimbau masyarakat untuk menghemat penggunaan air bersih", "Menjual perlengkapan pipa saluran air rumah tangga"],
+                        answer: 1,
+                        explanation: "Iklan bertujuan mengajak masyarakat bijak dan berhemat air bersih demi masa depan."
+                    },
+                    {
+                        stimulus: "Puisi Ibu:\nKaulah pelita dalam gulita,\nYang menuntun langkahku dengan cinta,\nTanpa lelah kau beri makna,\nKasihmu abadi sepanjang masa.",
+                        question: "Makna kiasan dari kata 'pelita' dalam bait puisi di atas adalah...",
+                        options: ["Lampu penerangan jalan", "Sumber cahaya atau petunjuk hidup", "Perhiasan emas ibu"],
+                        answer: 1,
+                        explanation: "Kata 'pelita' dalam puisi bermakna kiasan sebagai sumber penerang, penuntun, atau petunjuk hidup."
+                    },
+                    {
+                        stimulus: "Tabel Jadwal Kereta Api Eksekutif:\n- Argo Muria (Semarang - Jakarta, Berangkat 07.00)\n- Argo Sindoro (Semarang - Jakarta, Berangkat 16.00)\n- Brawijaya (Malang - Jakarta, Berangkat 18.00)",
+                        question: "Kereta apa saja yang melayani jurusan dari Semarang menuju Jakarta?",
+                        options: ["Argo Muria dan Argo Sindoro", "Brawijaya saja", "Semua kereta dalam jadwal"],
+                        answer: 0,
+                        explanation: "Berdasarkan tabel, kereta jurusan Semarang - Jakarta adalah Argo Muria dan Argo Sindoro."
+                    },
+                    {
+                        stimulus: "Surat Undangan Resmi: 'Yth. Bapak/Ibu Wali Murid Kelas VI SD Negeri Batursari 3 di tempat. Kami mengundang kehadiran Bapak/Ibu dalam acara sosialisasi persiapan ujian akhir sekolah...'",
+                        question: "Siapakah pihak yang dituju sebagai penerima surat undangan tersebut?",
+                        options: ["Seluruh guru kelas", "Kepala Dinas Pendidikan", "Bapak/Ibu Wali Murid Kelas VI"],
+                        answer: 2,
+                        explanation: "Penerima surat yang tertera jelas pada bagian alamat tujuan adalah Bapak/Ibu Wali Murid Kelas VI."
+                    },
+                    {
+                        stimulus: "Dalam sebuah diskusi kelompok, terjadi perbedaan pendapat antara kelompok Andi dan kelompok Budi dalam menentukan lokasi kegiatan bakti sosial. Sikap terpuji yang harus ditunjukkan adalah...",
+                        question: "Bagaimana cara menyikapi perbedaan pendapat dalam diskusi?",
+                        options: ["Memaksakan kehendak kelompok sendiri", "Musyawarah untuk mufakat dengan kepala dingin", "Meninggalkan ruang diskusi dan marah"],
+                        answer: 1,
+                        explanation: "Perbedaan pendapat dalam diskusi harus diselesaikan secara musyawarah untuk mencapai mufakat."
+                    },
+                    {
+                        stimulus: "Poster Kampanye Kesehatan: 'Ayo Cuci Tangan Pakai Sabun Sebelum Makan! Cegah kuman penyakit masuk ke dalam tubuh kita.'",
+                        question: "Tujuan pembuatan poster kampanye tersebut adalah...",
+                        options: ["Mengajak masyarakat membiasakan cuci tangan demi kesehatan", "Melarang masyarakat makan di rumah", "Menjual produk sabun mandi batangan"],
+                        answer: 0,
+                        explanation: "Poster kampanye bertujuan mengajak pembaca membiasakan perilaku hidup bersih dan sehat."
+                    },
+                    {
+                        stimulus: "Penggalan Cerita Fiksi: 'Tiba-tiba, suara gemuruh terdengar dari puncak gunung. Warga desa segera berlarian menyelamatkan diri menuju titik evakuasi yang telah disiapkan.'",
+                        question: "Peristiwa yang sedang terjadi dalam penggalan cerita tersebut adalah...",
+                        options: ["Perayaan pesta panen raya desa", "Tanda-tanda terjadinya bencana alam vulkanik", "Lomba lari maraton antar warga"],
+                        answer: 1,
+                        explanation: "Suara gemuruh dari puncak gunung dan evakuasi warga mengindikasikan peristiwa bencana alam vulkanik."
+                    },
+                    {
+                        stimulus: "Pesan Singkat (SMS/WhatsApp):\n'Ibu, nanti sore tolong ambilkan rapor kakak di sekolah ya, aku ada jadwal latihan pramuka.'",
+                        question: "Siapa yang meminta tolong untuk mengambilkan rapor?",
+                        options: ["Ibu", "Kakak", "Anak/Adik (pengirim pesan)"],
+                        answer: 2,
+                        explanation: "Pengirim pesan meminta tolong kepada ibu untuk mengambilkan rapor kakak karena ada kegiatan pramuka."
+                    },
+                    {
+                        stimulus: "Evaluasi Literasi TKA: Kemampuan literasi membaca siswa kelas VI tidak hanya diukur dari kecepatan membaca, tetapi yang paling utama adalah...",
+                        question: "Hal terpenting dalam kemampuan literasi membaca adalah...",
+                        options: ["Pemahaman mendalam, penalaran, dan evaluasi isi teks", "Jumlah kata yang dibaca dalam satu detik", "MENGHAFAL seluruh isi buku tanpa memahami makna"],
+                        answer: 0,
+                        explanation: "Aspek utama literasi TKA adalah pemahaman bacaan, kemampuan penalaran kritis, serta evaluasi isi teks."
+                    }
+                ]
+            }
+        ];
+
+        // --- VARIABEL STATE GAME ---
+        let gameState = {
+            playerName: "",
+            currentWorld: 0,
+            currentQuestionIdx: 0,
+            score: 0,
+            correctCount: 0,
+            soundOn: true,
+            unlockedWorlds: 1, // Level 1 terbuka
+            customQuestions: JSON.parse(localStorage.getItem('custom_questions') || '[]'),
+            savedScores: JSON.parse(localStorage.getItem('saved_scores') || '[]')
+        };
+
+        // --- WEB AUDIO API SOUND EFFECTS ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(type) {
+            if (!gameState.soundOn) return;
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.15);
+                gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+                gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            }
+        }
+
+        function toggleSound() {
+            gameState.soundOn = !gameState.soundOn;
+            const icon = document.getElementById('soundIcon');
+            if (gameState.soundOn) {
+                icon.className = "fa-solid fa-volume-high text-lg";
+            } else {
+                icon.className = "fa-solid fa-volume-xmark text-lg text-slate-400";
+            }
+        }
+
+        // --- NAVIGASI ANTAR HALAMAN ---
+        function showScreen(screenId) {
+            ['screen-home', 'screen-map', 'screen-game', 'screen-result', 'screen-certificate'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        function startGame() {
+            playSound('click');
+            const nameInput = document.getElementById('playerNameInput').value.trim();
+            if (!nameInput) {
+                alert("Mohon masukkan nama penjelajah cilik terlebih dahulu!");
+                return;
+            }
+            gameState.playerName = nameInput;
+            document.getElementById('displayPlayerName').innerText = gameState.playerName;
+            renderWorldMap();
+            showScreen('screen-map');
+        }
+
+        function goToHome() {
+            playSound('click');
+            showScreen('screen-home');
+        }
+
+        // --- RENDER PETA DUNIA ---
+        function renderWorldMap() {
+            const container = document.getElementById('worldsContainer');
+            container.innerHTML = '';
+
+            defaultWorlds.forEach((world, index) => {
+                const isUnlocked = index < gameState.unlockedWorlds;
+                const div = document.createElement('div');
+                div.className = `p-4 rounded-2xl border transition flex items-center justify-between ${isUnlocked ? 'bg-white border-purple-200 shadow-sm hover:border-brandPurple cursor-pointer' : 'bg-slate-100 border-slate-200 opacity-60 cursor-not-allowed'}`;
+                
+                if (isUnlocked) {
+                    div.onclick = () => selectWorld(index);
+                }
+
+                div.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr ${world.color} flex items-center justify-center text-white text-xl shadow-md">
+                            <i class="fa-solid ${world.icon}"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-fun font-bold text-slate-800 text-base md:text-lg">${world.name}</h4>
+                            <p class="text-xs text-slate-500">${world.desc}</p>
+                        </div>
+                    </div>
+                    <div>
+                        ${isUnlocked ? '<span class="bg-emerald-100 text-emerald-700 font-bold px-3 py-1 rounded-full text-xs flex items-center gap-1"><i class="fa-solid fa-play"></i> Main</span>' : '<span class="bg-slate-200 text-slate-500 font-bold px-3 py-1 rounded-full text-xs flex items-center gap-1"><i class="fa-solid fa-lock"></i> Terkunci</span>'}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            // Tombol Sertifikat jika semua level terbuka/tamat
+            if (gameState.unlockedWorlds > 5) {
+                const certDiv = document.createElement('div');
+                certDiv.innerHTML = `
+                    <button onclick="openCertificate()" class="w-full mt-4 py-3.5 bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-fun font-bold rounded-2xl btn-3d shadow-md flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-award text-xl"></i> LIHAT SERTIFIKAT KELULUSAN
+                    </button>
+                `;
+                container.appendChild(certDiv);
+            }
+        }
+
+        // --- GAMEPLAY LOGIC ---
+        function selectWorld(worldIndex) {
+            playSound('click');
+            gameState.currentWorld = worldIndex;
+            gameState.currentQuestionIdx = 0;
+            gameState.score = 0;
+            gameState.correctCount = 0;
+            showScreen('screen-game');
+            loadQuestion();
+        }
+
+        function getCurrentQuestions() {
+            // Gabungkan default soal dengan soal custom guru untuk dunia terkait
+            const defQ = defaultWorlds[gameState.currentWorld].questions;
+            const customQ = gameState.customQuestions.filter(q => q.worldId == gameState.currentWorld);
+            return [...defQ, ...customQ];
+        }
+
+        function loadQuestion() {
+            const questions = getCurrentQuestions();
+            const q = questions[gameState.currentQuestionIdx];
+
+            document.getElementById('levelBadge').innerText = defaultWorlds[gameState.currentWorld].name;
+            document.getElementById('currentQuestionNum').innerText = gameState.currentQuestionIdx + 1;
+            
+            // Progress Bar
+            const progress = ((gameState.currentQuestionIdx) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+
+            // Stimulus
+            const stimulusBox = document.getElementById('stimulusContainer');
+            if (q.stimulus && q.stimulus.trim() !== "") {
+                stimulusBox.innerHTML = `<strong><i class="fa-solid fa-book-open text-brandBlue mr-1"></i> Stimulus Bacaan:</strong><br>${q.stimulus}`;
+                stimulusBox.classList.remove('hidden');
+            } else {
+                stimulusBox.classList.add('hidden');
+            }
+
+            document.getElementById('questionText').innerText = q.question;
+
+            // Options
+            const optContainer = document.getElementById('optionsContainer');
+            optContainer.innerHTML = '';
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-2xl border border-slate-200 hover:border-brandPurple hover:bg-purple-50/50 font-medium text-slate-700 transition flex items-center justify-between shadow-sm";
+                btn.innerHTML = `<span><strong class="mr-2 text-brandPurple">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span> <i class="fa-regular fa-circle text-slate-300"></i>`;
+                btn.onclick = () => selectAnswer(idx, btn);
+                optContainer.appendChild(btn);
+            });
+
+            document.getElementById('explanationBox').classList.add('hidden');
+            document.getElementById('nextQuestionBtn').classList.add('hidden');
+        }
+
+        function selectAnswer(selectedIdx, btnElement) {
+            playSound('click');
+            const questions = getCurrentQuestions();
+            const q = questions[gameState.currentQuestionIdx];
+            const allBtns = document.getElementById('optionsContainer').children;
+
+            // Disable all buttons after choice
+            for (let b of allBtns) {
+                b.onclick = null;
+                b.classList.add('opacity-75', 'cursor-not-allowed');
+            }
+
+            const isCorrect = (selectedIdx === q.answer);
+            if (isCorrect) {
+                playSound('correct');
+                btnElement.className = "w-full text-left p-4 rounded-2xl border border-emerald-500 bg-emerald-50 font-semibold text-emerald-900 flex items-center justify-between shadow-sm";
+                btnElement.innerHTML += ` <i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i>`;
+                gameState.score += 10;
+                gameState.correctCount++;
+            } else {
+                playSound('wrong');
+                btnElement.className = "w-full text-left p-4 rounded-2xl border border-red-400 bg-red-50 font-semibold text-red-900 flex items-center justify-between shadow-sm";
+                btnElement.innerHTML += ` <i class="fa-solid fa-circle-xmark text-red-500 text-lg"></i>`;
+                
+                // Tunjukkan jawaban benar
+                allBtns[q.answer].className = "w-full text-left p-4 rounded-2xl border border-emerald-500 bg-emerald-50 font-semibold text-emerald-900 flex items-center justify-between shadow-sm";
+            }
+
+            // Tampilkan pembahasan
+            document.getElementById('explanationText').innerText = q.explanation;
+            document.getElementById('explanationBox').classList.remove('hidden');
+            document.getElementById('nextQuestionBtn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            playSound('click');
+            const questions = getCurrentQuestions();
+            gameState.currentQuestionIdx++;
+
+            if (gameState.currentQuestionIdx < questions.length) {
+                loadQuestion();
+            } else {
+                showResultScreen();
+            }
+        }
+
+        // --- HALAMAN HASIL & PENILAIAN ---
+        function showResultScreen() {
+            showScreen('screen-result');
+            const questions = getCurrentQuestions();
+            const finalScore = gameState.score; // Max 100 jika 10 soal benar
+            
+            document.getElementById('resName').innerText = gameState.playerName;
+            document.getElementById('resLevel').innerText = defaultWorlds[gameState.currentWorld].name;
+            document.getElementById('resCorrect').innerText = gameState.correctCount;
+            document.getElementById('resScore').innerText = finalScore;
+
+            // Hitung Bintang
+            let stars = 1;
+            if (finalScore >= 90) stars = 3;
+            else if (finalScore >= 70) stars = 2;
+
+            let starHtml = '';
+            for (let i = 0; i < 3; i++) {
+                starHtml += (i < stars) ? '⭐ ' : '☆ ';
+            }
+            document.getElementById('resStars').innerHTML = starHtml;
+
+            const btnNext = document.getElementById('btnNextLevel');
+            const btnRetry = document.getElementById('btnRetryLevel');
+
+            // Simpan skor ke localStorage
+            saveScoreRecord(finalScore);
+
+            if (finalScore >= 70) {
+                document.getElementById('resultTitle').innerText = "SELAMAT! LEVEL SELESAI!";
+                document.getElementById('resultEmoji').innerText = "🎉";
+                
+                if (gameState.currentWorld + 1 >= gameState.unlockedWorlds && gameState.unlockedWorlds < 5) {
+                    gameState.unlockedWorlds = gameState.currentWorld + 2;
+                }
+
+                if (gameState.currentWorld < 4) {
+                    btnNext.classList.remove('hidden');
+                } else {
+                    btnNext.classList.add('hidden');
+                    alert("Luar biasa! Kamu telah menamatkan seluruh 5 Dunia Petualangan Literasi!");
+                }
+                btnRetry.classList.add('hidden');
+            } else {
+                document.getElementById('resultTitle').innerText = "BELUM MENCAPAI TARGET";
+                document.getElementById('resultEmoji').innerText = "💪";
+                document.getElementById('resultSubtitle').innerText = "Nilai minimal 70 diperlukan untuk membuka level berikutnya.";
+                btnNext.classList.add('hidden');
+                btnRetry.classList.remove('hidden');
+            }
+        }
+
+        function proceedNextLevel() {
+            playSound('click');
+            if (gameState.currentWorld < 4) {
+                gameState.currentWorld++;
+                gameState.currentQuestionIdx = 0;
+                gameState.score = 0;
+                gameState.correctCount = 0;
+                showScreen('screen-game');
+                loadQuestion();
+            }
+        }
+
+        function retryLevel() {
+            playSound('click');
+            selectWorld(gameState.currentWorld);
+        }
+
+        function backToMap() {
+            playSound('click');
+            renderWorldMap();
+            showScreen('screen-map');
+        }
+
+        function openCertificate() {
+            playSound('click');
+            document.getElementById('certPlayerName').innerText = gameState.playerName;
+            showScreen('screen-certificate');
+        }
+
+        // --- TUTORIAL MODAL ---
+        function openTutorial() {
+            playSound('click');
+            document.getElementById('modalTutorial').classList.remove('hidden');
+        }
+        function closeTutorial() {
+            playSound('click');
+            document.getElementById('modalTutorial').classList.add('hidden');
+        }
+
+        // --- TEACHER MODE & LOCALSTORAGE ---
+        function openTeacherModal() {
+            playSound('click');
+            renderSavedScores();
+            document.getElementById('modalTeacher').classList.remove('hidden');
+        }
+        function closeTeacherModal() {
+            playSound('click');
+            document.getElementById('modalTeacher').classList.add('hidden');
+        }
+
+        function switchTeacherTab(tab) {
+            playSound('click');
+            if (tab === 'scores') {
+                document.getElementById('teacherTabScores').classList.remove('hidden');
+                document.getElementById('teacherTabBank').classList.add('hidden');
+                document.getElementById('tabBtnScores').className = "px-4 py-2 bg-brandPurple text-white rounded-xl shadow-sm transition";
+                document.getElementById('tabBtnBank').className = "px-4 py-2 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition";
+            } else {
+                document.getElementById('teacherTabScores').classList.add('hidden');
+                document.getElementById('teacherTabBank').classList.remove('hidden');
+                document.getElementById('tabBtnBank').className = "px-4 py-2 bg-brandPurple text-white rounded-xl shadow-sm transition";
+                document.getElementById('tabBtnScores').className = "px-4 py-2 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition";
+            }
+        }
+
+        function saveScoreRecord(score) {
+            const record = {
+                name: gameState.playerName,
+                level: defaultWorlds[gameState.currentWorld].name,
+                score: score,
+                date: new Date().toLocaleDateString('id-ID')
+            };
+            gameState.savedScores.push(record);
+            localStorage.setItem('saved_scores', JSON.stringify(gameState.savedScores));
+        }
+
+        function renderSavedScores() {
+            const listContainer = document.getElementById('savedScoresList');
+            listContainer.innerHTML = '';
+            if (gameState.savedScores.length === 0) {
+                listContainer.innerHTML = `<p class="text-slate-400 text-center py-2">Belum ada riwayat skor tersimpan.</p>`;
+                return;
+            }
+            gameState.savedScores.forEach((s) => {
+                const item = document.createElement('div');
+                item.className = "flex justify-between items-center bg-white p-2.5 rounded-lg border shadow-sm";
+                item.innerHTML = `<div><strong>${s.name}</strong> <span class="text-xs text-slate-500">(${s.date})</span><br><span class="text-xs text-brandPurple">${s.level}</span></div> <span class="font-bold text-blue-600 text-base">Nilai: ${s.score}</span>`;
+                listContainer.appendChild(item);
+            });
+        }
+
+        function clearAllScores() {
+            if (confirm("Yakin ingin menghapus seluruh riwayat skor siswa?")) {
+                gameState.savedScores = [];
+                localStorage.removeItem('saved_scores');
+                renderSavedScores();
+            }
+        }
+
+        function saveCustomQuestion() {
+            const worldId = parseInt(document.getElementById('newWorldId').value);
+            const stimulus = document.getElementById('newStimulus').value.trim();
+            const qText = document.getElementById('newQText').value.trim();
+            const opt0 = document.getElementById('newOpt0').value.trim();
+            const opt1 = document.getElementById('newOpt1').value.trim();
+            const opt2 = document.getElementById('newOpt2').value.trim();
+            const ans = parseInt(document.getElementById('newAns').value);
+            const exp = document.getElementById('newExp').value.trim();
+
+            if (!qText || !opt0 || !opt1 || !opt2) {
+                alert("Mohon lengkapi pertanyaan dan minimal pilihan jawaban A, B, C!");
+                return;
+            }
+
+            const newQ = {
+                stimulus: stimulus,
+                question: qText,
+                options: [opt0, opt1, opt2],
+                answer: ans,
+                explanation: exp || "Pembahasan soal buatan guru.",
+                worldId: worldId
+            };
+
+            gameState.customQuestions.push(newQ);
+            localStorage.setItem('custom_questions', JSON.stringify(gameState.customQuestions));
+            alert("Soal berhasil ditambahkan ke bank soal perangkat!");
+            
+            // Reset form
+            document.getElementById('newStimulus').value = '';
+            document.getElementById('newQText').value = '';
+            document.getElementById('newOpt0').value = '';
+            document.getElementById('newOpt1').value = '';
+            document.getElementById('newOpt2').value = '';
+            document.getElementById('newExp').value = '';
+        }
+    </script>
+</body>
+</html>
